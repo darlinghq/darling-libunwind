@@ -7,8 +7,12 @@ set(CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES 0)
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
 
+if(TARGET_i386 OR TARGET_x86_64)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2 -msse3")
+endif()
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LIBUNWIND_IS_NATIVE_ONLY -nostdinc -nostdinc++ -fno-rtti -fno-exceptions -funwind-tables -ggdb -O0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2 -msse3 -w -nostdinc -fno-rtti -funwind-tables -ggdb -O0")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w -nostdinc -fno-rtti -funwind-tables -ggdb -O0")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__DARWIN_UNIX03 -fPIC -w")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -nostdlib -Wl,-flat_namespace -Wl,-undefined,suppress")
 
