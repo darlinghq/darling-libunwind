@@ -1900,6 +1900,9 @@ bool UnwindCursor<A, R>::getInfoFromSEH(pint_t pc) {
 
 template <typename A, typename R>
 void UnwindCursor<A, R>::setInfoBasedOnIPRegister(bool isReturnAddress) {
+  // A cursor can be repositioned with unw_set_reg(UNW_REG_IP). A failed
+  // lookup at an earlier IP must not poison a subsequent successful lookup.
+  _unwindInfoMissing = false;
   typename R::reg_t pc = this->getReg(UNW_REG_IP);
 #if defined(_LIBUNWIND_ARM_EHABI)
   // Remove the thumb bit so the IP represents the actual instruction address.
