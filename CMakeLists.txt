@@ -49,6 +49,7 @@ add_circular(unwind FAT
 		${LIBUNWIND_SOURCES}
 	SIBLINGS
 		system_c
+		system_dyld
 		keymgr
 )
 #target_link_libraries(unwind PRIVATE system_c keymgr)
