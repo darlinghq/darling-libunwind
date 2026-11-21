@@ -9,9 +9,10 @@ set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_LIBUNWIND_IS_NATIVE_ONLY -nostdinc -nostdinc++ -fno-rtti -fno-exceptions -funwind-tables -ggdb -O0")
 # DARLING: -msse* is x86-only; gate by target arch.
-if (TARGET_i386 OR TARGET_x86_64)
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2 -msse3")
-endif()
+# The SSE options are for the Intel slices only
+darling_archs(_sse_archs FAMILY x86)
+darling_xarch_flags(_sse_flags ARCHS ${_sse_archs} OPTIONS -msse -msse2 -msse3)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${_sse_flags}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w -nostdinc -fno-rtti -funwind-tables -ggdb -O0")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__DARWIN_UNIX03 -fPIC -w")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -nostdlib -Wl,-flat_namespace -Wl,-undefined,suppress")
